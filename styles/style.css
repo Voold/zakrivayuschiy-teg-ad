@@ -9,8 +9,255 @@
 ✦ button__text — для обозначения текстового элемента внутри кнопки
 
 */
-
+/* 
 .page {
   min-inline-size: 320px;
   min-block-size: 100dvb;
+}
+ */
+/* Базовые стили и сброс */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  min-width: 375px;
+  font-family: "Inter", sans-serif;
+  /* Статичное изображение фона, фиксированное при прокрутке */
+  background-image: url("../images/background.png");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Секция 1 - Хедер */
+.header {
+  width: 100%;
+  height: 368px;
+  margin: 100px 0;
+  background-color: #fff;
+  border: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.header__title {
+  font-family: "Press Start 2P", cursive;
+  /* Адаптивный шрифт от 65px (1440) до 49px (375) */
+  font-size: clamp(49px, 1.5vw + 43.3px, 65px);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.header__subtitle {
+  font-family: "Press Start 2P", cursive;
+  /* Адаптивный шрифт от 23px до 14px */
+  font-size: clamp(14px, 0.84vw + 10.8px, 23px);
+  text-transform: uppercase;
+}
+
+/* Секции (Карточки) */
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px; /* Отступ между блоками */
+}
+
+.card {
+  width: 100%;
+  background-color: #fff;
+  border: 2px solid #000;
+}
+
+.card__title {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 25px;
+}
+
+.card__image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Текст поверх фото через ::before */
+.card__image-container::before {
+  content: "</HTML>";
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
+  opacity: 0.5; /* Для читаемости на фото */
+  z-index: 1;
+}
+
+.card__description {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+}
+
+.card__text {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.card__actions {
+  padding: 0 25px 25px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Кнопки */
+.button {
+  background: transparent;
+  border: 2px solid #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Press Start 2P", cursive;
+  font-size: 14px;
+}
+
+.button_type_like {
+  width: 130px;
+  height: 38px;
+  gap: 12px;
+}
+
+.button__icon {
+  width: 20px;
+  height: auto;
+}
+
+/* Футер */
+.footer {
+  width: 100%;
+  padding: 50px 0 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.button_type_save {
+  width: 335px;
+  height: 51px;
+  gap: 12px;
+  background-color: #fff;
+}
+
+/* --- Обновленный блок card__actions --- */
+.card__actions {
+  padding: 0 25px 25px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px; /* Отступ 12px между иконкой и кнопкой, как вы просили изначально */
+}
+
+/* Кнопка-обертка для иконки */
+.card__icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Сама SVG-иконка */
+.like-icon {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease; /* Плавность для скриптовой анимации */
+}
+
+/* Состояние лайкнутой иконки (добавляется скриптом) */
+.like-icon.is-liked {
+  /* Пример стилизации: красная заливка. Замените на нужную по макету */
+  fill: #ff0000;
+}
+
+/* Базовые стили кнопок (для Like и Сохранить) */
+.button {
+  background: transparent;
+  border: 2px solid #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Press Start 2P", cursive;
+  font-size: 14px;
+}
+
+.button__text {
+  /* Специфичных стилей здесь может не быть, но класс важен для JS */
+}
+
+/* Специфичные стили для кнопки Like */
+.card__like-button {
+  width: 130px;
+  height: 38px;
+}
+
+/* --- Стили для футера остались без изменений --- */
+.footer {
+  width: 100%;
+  padding: 50px 0 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.button_type_save {
+  width: 335px;
+  height: 51px;
+  gap: 12px;
+  background-color: #fff;
+}
+
+.button__icon {
+  width: 20px;
+  height: auto;
+}
+
+@media (max-width: 375px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  .button_type_save {
+    width: 100%;
+    max-width: 335px;
+  }
 }
