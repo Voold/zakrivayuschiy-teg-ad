@@ -471,6 +471,8 @@ const likeIconTemplate = `
 const likeHeartArray = document.querySelectorAll(".like-icon");
 const likeButtonArray = document.querySelectorAll(".card__like-button");
 const iconButtonArray = document.querySelectorAll(".card__icon-button");
+const LIKE_ANIMATION_DURATION = 600;
+const UNLIKE_ANIMATION_DURATION = 300;
 
 likeHeartArray.forEach((likeHeart) => {
   likeHeart.innerHTML = likeIconTemplate;
@@ -486,20 +488,36 @@ likeButtonArray.forEach((button, index) => {
 });
 
 function toggleIsLiked(heart, button) {
-  heart.classList.toggle("is-liked");
-  setButtonText(heart, button);
+  clearHeartAnimationTimeout(heart);
+
+  if (heart.classList.contains("is-liked")) {
+    heart.classList.add("is-unliking");
+
+    heart.animationTimeoutId = setTimeout(() => {
+      heart.classList.remove("is-liked", "is-unliking");
+      setButtonText(button, false);
+      heart.animationTimeoutId = null;
+    }, UNLIKE_ANIMATION_DURATION);
+
+    return;
+  }
+
+  heart.classList.add("is-liked");
+  heart.animationTimeoutId = setTimeout(() => {
+    setButtonText(button, true);
+    heart.animationTimeoutId = null;
+  }, LIKE_ANIMATION_DURATION);
 }
 
-function setButtonText(heart, button) {
-  if ([...heart.classList].includes("is-liked")) {
-    setTimeout(
-      () => (button.querySelector(".button__text").textContent = "Unlike"),
-      500,
-    );
-  } else {
-    setTimeout(
-      () => (button.querySelector(".button__text").textContent = "Like"),
-      500,
-    );
+function setButtonText(button, isLiked) {
+  button.querySelector(".button__text").textContent = isLiked
+    ? "Unlike"
+    : "Like";
+}
+
+function clearHeartAnimationTimeout(heart) {
+  if (heart.animationTimeoutId) {
+    clearTimeout(heart.animationTimeoutId);
+    heart.animationTimeoutId = null;
   }
 }
