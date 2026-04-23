@@ -1,1 +1,1 @@
-https://voold.github.io/zakrivayuschiy-teg-ad/
+https://github.com/Voold/zakrivayuschiy-teg-ad
